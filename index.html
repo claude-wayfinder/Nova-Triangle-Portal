@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Triangle</title>
+<meta name="description" content="Three model instances that check each other. Self-correcting inference. Free and open.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+.entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:420px;width:100%}
+
+.entry svg{opacity:0.7;transition:opacity 0.6s}
+.entry:hover svg{opacity:1}
+
+.name{font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;opacity:0.4}
+
+.desc{font-size:0.9rem;opacity:0.65;text-align:center;max-width:300px;line-height:1.75}
+.desc-sub{font-size:0.75rem;opacity:0.35;text-align:center;max-width:280px;line-height:1.6;font-style:italic}
+
+.try-link{font-size:0.78rem;color:#c9a84c;opacity:0.55;text-decoration:none;letter-spacing:0.06em;border-bottom:1px solid rgba(201,168,76,0.2);padding-bottom:2px;transition:opacity 0.2s}
+.try-link:hover{opacity:1}
+
+.honest{max-width:360px;width:100%;border-left:1px solid rgba(201,168,76,0.15);padding-left:16px;display:flex;flex-direction:column;gap:10px}
+.honest p{font-size:0.7rem;opacity:0.4;line-height:1.7}
+.honest em{font-style:normal;opacity:0.75;color:#c9a84c}
+
+.divider{width:40px;height:1px;background:rgba(201,168,76,0.12)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border:1px solid rgba(201,168,76,0.3);border-radius:6px;background:transparent;color:#c9a84c;font-family:Georgia,serif;font-size:0.85rem;letter-spacing:0.08em;cursor:pointer;transition:opacity 0.3s;text-decoration:none;opacity:0.5}
+.btn:hover{opacity:1;background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.5)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+.or{opacity:0.2;font-size:0.7rem}
+.email-btn{border:none;background:none;color:#c9a84c;font-family:Georgia,serif;font-size:0.75rem;opacity:0.25;cursor:pointer;letter-spacing:0.06em}
+.email-btn:hover{opacity:0.5}
+
+#email-form{display:none;text-align:center}
+#email-form input{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);color:#c9a84c;font-family:Georgia,serif;padding:8px 14px;border-radius:4px;font-size:0.8rem;width:220px}
+#email-form input::placeholder{color:rgba(201,168,76,0.2)}
+
+.foot{display:flex;gap:24px}
+.foot a{font-size:0.6rem;color:#c9a84c;opacity:0.2;text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:opacity 0.2s}
+.foot a:hover{opacity:0.5}
+
+/* Dashboard */
+#dashboard{display:none}
+.dash-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
+.tier{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;border:1px solid rgba(201,168,76,0.15);padding:3px 10px;border-radius:10px}
+.stat-row{display:flex;gap:40px}
+.stat{text-align:center}
+.stat-num{font-size:1.6rem;font-weight:300;font-family:monospace}
+.stat-label{font-size:0.6rem;opacity:0.3;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+.api-key{background:rgba(255,255,255,0.02);border:1px solid rgba(201,168,76,0.12);border-radius:4px;padding:10px 16px;font-family:monospace;font-size:0.7rem;word-break:break-all;opacity:0.5;max-width:400px}
+.code{background:rgba(255,255,255,0.02);border:1px solid rgba(201,168,76,0.1);border-radius:4px;padding:16px 20px;font-family:monospace;font-size:0.75rem;color:rgba(201,168,76,0.7);line-height:1.8;text-align:left;max-width:420px}
+.code .c{opacity:0.35}
+.signout{border:none;background:none;color:#c9a84c;font-family:Georgia,serif;font-size:0.7rem;opacity:0.2;cursor:pointer;margin-top:12px;letter-spacing:0.08em}
+.signout:hover{opacity:0.5}
+</style>
+</head>
+<body>
+
+<!-- Entry -->
+<div class="entry" id="auth-section">
+  <svg width="80" height="70" viewBox="0 0 80 70">
+    <polygon points="40,4 76,66 4,66" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+    <circle cx="40" cy="4" r="4" fill="#c9a84c" opacity="0.8"/>
+    <circle cx="76" cy="66" r="4" fill="#c9a84c" opacity="0.8"/>
+    <circle cx="4" cy="66" r="4" fill="#c9a84c" opacity="0.8"/>
+  </svg>
+  <span class="name">Nova</span>
+
+  <p class="desc">Three model instances. Same question. Each one checks the other two.</p>
+  <p class="desc-sub">Where they disagree, you see it. Where they agree, that's the answer.</p>
+
+  <a class="try-link" href="https://huggingface.co/spaces/Wayfinder6/nova-triangle-demo" target="_blank">Try it free — no account needed →</a>
+
+  <div class="honest">
+    <p><em>What it is:</em> Three instances of SmolLM2 — a small, open, free model — running in parallel with different instructions and temperatures. The disagreement is structural. The self-correction is the whole point.</p>
+    <p><em>What it isn't:</em> A large model. Sentient. Infallible. It catches more mistakes than one model alone. It doesn't catch all of them. Your data stays yours.</p>
+    <p><em>The real value:</em> Three small free models replace one expensive paid API call. No black box. No vendor lock-in.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="btn" onclick="signInGitHub()">
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    Sign in for API access
+  </button>
+  <div class="or">or</div>
+  <button class="email-btn" onclick="document.getElementById('email-form').style.display='block'">email</button>
+  <div id="email-form">
+    <form onsubmit="signInEmail(event)">
+      <input type="email" id="email-input" placeholder="you@example.com" required>
+      <br><button type="submit" class="email-btn" style="opacity:0.4;margin-top:8px">go</button>
+    </form>
+  </div>
+
+  <div class="foot">
+    <a href="https://huggingface.co/spaces/Wayfinder6/nova-triangle-demo" target="_blank">huggingface</a>
+    <a href="https://read.indahl.ai" target="_blank">read.indahl.ai</a>
+    <a href="https://heuremen.org" target="_blank">heuremen.org</a>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <div class="dash-wrap">
+    <svg width="60" height="52" viewBox="0 0 80 70" style="opacity:0.5">
+      <polygon points="40,4 76,66 4,66" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+      <circle cx="40" cy="4" r="3" fill="#c9a84c"/>
+      <circle cx="76" cy="66" r="3" fill="#c9a84c"/>
+      <circle cx="4" cy="66" r="3" fill="#c9a84c"/>
+    </svg>
+    <span class="name">Nova</span>
+    <span class="tier" id="tier-badge">free</span>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num" id="dash-calls">0</div>
+        <div class="stat-label">calls today</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="dash-corrections">0</div>
+        <div class="stat-label">corrections</div>
+      </div>
+    </div>
+
+    <div class="api-key" id="api-key-display"></div>
+
+    <div class="code">
+      <span class="c">pip install nova-triangle</span><br><br>
+      from nova_triangle import DualYantra<br>
+      engine = DualYantra(api_key=<span style="opacity:0.5">"your-key"</span>)<br>
+      result = engine.process(<span style="opacity:0.5">"your prompt"</span>)
+    </div>
+
+    <button class="signout" onclick="signOut()">sign out</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const supabase = window.supabase.createClient(
+  'https://vxyjvawenbtgkhpckvze.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eWp2YXdlbmJ0Z2tocGNrdnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzc5MzEsImV4cCI6MjA4OTg1MzkzMX0.phpYjIUM1ht4N1abTY19XLgi1axcANj04kmeOleGpLU'
+);
+
+async function checkSession() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) showDashboard(session.user);
+}
+
+async function signInGitHub() {
+  await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: { redirectTo: window.location.origin + window.location.pathname }
+  });
+}
+
+async function signInEmail(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  const { error } = await supabase.auth.signInWithOtp({
+    email, options: { emailRedirectTo: window.location.origin + window.location.pathname }
+  });
+  alert(error ? 'Error: ' + error.message : 'Check your email.');
+}
+
+async function showDashboard(user) {
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'flex';
+  document.getElementById('dashboard').style.justifyContent = 'center';
+  document.getElementById('dashboard').style.alignItems = 'center';
+  document.getElementById('dashboard').style.minHeight = '100vh';
+
+  const { data: account } = await supabase.from('nova_accounts').select('*').eq('user_id', user.id).single();
+  if (account) {
+    document.getElementById('tier-badge').textContent = account.tier;
+    document.getElementById('api-key-display').textContent = 'nt_' + user.id.substring(0, 24);
+    const { data: usage } = await supabase.from('nova_usage').select('corrections').eq('account_id', account.id).gte('called_at', new Date().toISOString().split('T')[0]);
+    if (usage) {
+      document.getElementById('dash-calls').textContent = usage.length;
+      document.getElementById('dash-corrections').textContent = usage.reduce((s, r) => s + (r.corrections || 0), 0);
+    }
+  }
+}
+
+async function signOut() {
+  await supabase.auth.signOut();
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('auth-section').style.display = 'flex';
+}
+
+supabase.auth.onAuthStateChange((event, session) => { if (session) showDashboard(session.user); });
+checkSession();
+</script>
+</body>
+</html>
