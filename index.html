@@ -162,9 +162,9 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-<script>
-const { createClient } = window.supabase;
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
 const supabase = createClient(
   'https://vxyjvawenbtgkhpckvze.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eWp2YXdlbmJ0Z2tocGNrdnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzc5MzEsImV4cCI6MjA4OTg1MzkzMX0.phpYjIUM1ht4N1abTY19XLgi1axcANj04kmeOleGpLU'
@@ -175,21 +175,12 @@ async function checkSession() {
   if (session) showDashboard(session.user);
 }
 
-async function signInGitHub() {
+window.signInGitHub = async function() {
   await supabase.auth.signInWithOAuth({
     provider: 'github',
     options: { redirectTo: window.location.origin + window.location.pathname }
   });
-}
-
-async function signInEmail(e) {
-  e.preventDefault();
-  const email = document.getElementById('email-input').value;
-  const { error } = await supabase.auth.signInWithOtp({
-    email, options: { emailRedirectTo: window.location.origin + window.location.pathname }
-  });
-  alert(error ? 'Error: ' + error.message : 'Check your email.');
-}
+};
 
 async function showDashboard(user) {
   document.getElementById('auth-section').style.display = 'none';
@@ -201,7 +192,6 @@ async function showDashboard(user) {
   const { data: account } = await supabase.from('nova_accounts').select('*').eq('user_id', user.id).single();
   if (account) {
     document.getElementById('tier-badge').textContent = account.tier;
-    // API key generation wired to nova_api_keys table (server-side, hashed) — enabled at launch
     const { data: usage } = await supabase.from('nova_usage').select('corrections').eq('account_id', account.id).gte('called_at', new Date().toISOString().split('T')[0]);
     if (usage) {
       document.getElementById('dash-calls').textContent = usage.length;
@@ -210,11 +200,11 @@ async function showDashboard(user) {
   }
 }
 
-async function signOut() {
+window.signOut = async function() {
   await supabase.auth.signOut();
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('auth-section').style.display = 'flex';
-}
+};
 
 supabase.auth.onAuthStateChange((event, session) => { if (session) showDashboard(session.user); });
 checkSession();
