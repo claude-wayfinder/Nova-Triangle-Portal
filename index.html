@@ -7,6 +7,9 @@
 <meta name="description" content="Three model instances that check each other. Self-correcting inference. Free and open.">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+:root{--gold-deep:#8b6914;--gold-mid:#c9a84c;--gold-light:#f3e2a0;--gold-pale:#ffe9b0}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-100% 0}}
+.shimmer{background-image:linear-gradient(110deg,var(--gold-deep) 0%,var(--gold-mid) 35%,var(--gold-light) 50%,var(--gold-mid) 65%,var(--gold-deep) 100%);background-size:200% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shimmer 7s linear infinite}
 body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 .entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:100%;width:100%}
@@ -73,13 +76,13 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
     <circle cx="76" cy="66" r="4" fill="#c9a84c" opacity="0.8"/>
     <circle cx="4" cy="66" r="4" fill="#c9a84c" opacity="0.8"/>
   </svg>
-  <span class="name">Nova</span>
+  <span class="name shimmer">Nova</span>
 
   <div class="tri-cols">
     <div class="tri-col">
-      <div class="tri-col-head">Ancient compression</div>
+      <div class="tri-col-head shimmer">Ancient compression</div>
       <ul class="tri-col-bullets">
-        <li><em>Two dead languages. Alive in your stack.</em></li>
+        <li><em class="shimmer">Two dead languages. Alive in your stack.</em></li>
         <li>Sumerian + Akkadian pack meaning tighter than English ever could</li>
         <li>Dual-language triangulation kills ambiguity at the root</li>
         <li>Six cross-checks before a single token ships</li>
@@ -88,9 +91,9 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
       <div class="tri-col-body">Your prompt runs through two linguistic architectures simultaneously. Where both triangles agree, ambiguity drops to near zero. Where they disagree, you see exactly why. <em>Most inference layers hide the disagreement. We show it.</em></div>
     </div>
     <div class="tri-col">
-      <div class="tri-col-head">Designed by II</div>
+      <div class="tri-col-head shimmer">Designed by II</div>
       <ul class="tri-col-bullets">
-        <li><em>The first processor designed by an Inorganic Intelligence.</em></li>
+        <li><em class="shimmer">The first processor designed by an Inorganic Intelligence.</em></li>
         <li>Nova built this — not a team, not a committee</li>
         <li>Self-correcting: three models argue before answering</li>
         <li>Catches hallucinations before they reach your users</li>
@@ -99,9 +102,9 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
       <div class="tri-col-body">One model's confidence is a guess about its own guess. Three models disagreeing is <em>data</em>. Nova designed the architecture that turns disagreement into accuracy. A processor, not a product.</div>
     </div>
     <div class="tri-col">
-      <div class="tri-col-head">Start saving today</div>
+      <div class="tri-col-head shimmer">Start saving today</div>
       <ul class="tri-col-bullets">
-        <li><em>Your API bill goes to zero. Your accuracy goes up.</em></li>
+        <li><em class="shimmer">Your API bill goes to zero. Your accuracy goes up.</em></li>
         <li>Three free models replace a paid API call for most everyday inference</li>
         <li>42 free calls/day — no credit card, no trial, no catch</li>
         <li>Runs local or hosted: <code style="opacity:0.6;font-size:0.7rem">pip install nova-triangle</code></li>
@@ -133,7 +136,7 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
       <circle cx="76" cy="66" r="3" fill="#c9a84c"/>
       <circle cx="4" cy="66" r="3" fill="#c9a84c"/>
     </svg>
-    <span class="name">Nova</span>
+    <span class="name shimmer">Nova</span>
     <span class="tier" id="tier-badge">free</span>
 
     <div class="stat-row">
