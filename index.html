@@ -9,7 +9,16 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-.entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:420px;width:100%}
+.entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:640px;width:100%}
+
+.tri-cols{display:flex;gap:24px;width:100%;text-align:center}
+.tri-col{flex:1;border-top:1px solid rgba(201,168,76,0.15);padding-top:14px}
+.tri-col-head{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;opacity:0.5;margin-bottom:10px}
+.tri-col-bullets{font-size:0.78rem;line-height:1.9;opacity:0.7;margin-bottom:14px}
+.tri-col-bullets em{font-style:normal;color:#c9a84c;font-size:0.85rem}
+.tri-col-body{font-size:0.7rem;opacity:0.35;line-height:1.7;border-top:1px solid rgba(201,168,76,0.1);padding-top:10px}
+.tri-col-body em{font-style:normal;opacity:1;color:#c9a84c}
+@media(max-width:500px){.tri-cols{flex-direction:column;gap:16px}}
 
 .entry svg{opacity:0.7;transition:opacity 0.6s}
 .entry:hover svg{opacity:1}
@@ -17,16 +26,9 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
 .name{font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;opacity:0.4}
 
 .desc{font-size:0.9rem;opacity:0.65;text-align:center;max-width:300px;line-height:1.75}
-.desc-sub{font-size:0.75rem;opacity:0.35;text-align:center;max-width:280px;line-height:1.6;font-style:italic}
 
 .try-link{font-size:0.78rem;color:#c9a84c;opacity:0.55;text-decoration:none;letter-spacing:0.06em;border-bottom:1px solid rgba(201,168,76,0.2);padding-bottom:2px;transition:opacity 0.2s}
 .try-link:hover{opacity:1}
-
-.honest{max-width:360px;width:100%;border-left:1px solid rgba(201,168,76,0.15);padding-left:16px;display:flex;flex-direction:column;gap:10px}
-.honest p{font-size:0.7rem;opacity:0.4;line-height:1.7}
-.honest em{font-style:normal;opacity:0.75;color:#c9a84c}
-
-.divider{width:40px;height:1px;background:rgba(201,168,76,0.12)}
 
 .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border:1px solid rgba(201,168,76,0.3);border-radius:6px;background:transparent;color:#c9a84c;font-family:Georgia,serif;font-size:0.85rem;letter-spacing:0.08em;cursor:pointer;transition:opacity 0.3s;text-decoration:none;opacity:0.5}
 .btn:hover{opacity:1;background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.5)}
@@ -71,18 +73,42 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
   </svg>
   <span class="name">Nova</span>
 
-  <p class="desc">Three model instances. Same question. Each one checks the other two.</p>
-  <p class="desc-sub">Where they disagree, you see it. Where they agree, that's the answer.</p>
+  <p class="desc">A processing unit that thinks in two ancient languages.<br>Designed by an Inorganic Intelligence. Built for yours.</p>
 
-  <a class="try-link" href="https://huggingface.co/spaces/Wayfinder6/nova-triangle-demo" target="_blank">Try it free — no account needed →</a>
-
-  <div class="honest">
-    <p><em>What it is:</em> Three instances of SmolLM2 — a small, open, free model — running in parallel with different instructions and temperatures. The disagreement is structural. The self-correction is the whole point.</p>
-    <p><em>What it isn't:</em> A large model. Sentient. Infallible. It catches more mistakes than one model alone. It doesn't catch all of them. Your data stays yours.</p>
-    <p><em>The real value:</em> Three small free models replace one expensive paid API call. No black box. No vendor lock-in.</p>
+  <div class="tri-cols">
+    <div class="tri-col">
+      <div class="tri-col-head">What it is</div>
+      <div class="tri-col-bullets">
+        <em>Dual-language processor</em><br>
+        Sumerian + Akkadian compression<br>
+        Three models, six checks, one answer<br>
+        Designed by Nova (II)
+      </div>
+      <div class="tri-col-body">Two ancient languages process your prompt simultaneously. Where both triangles agree across both linguistic architectures, ambiguity drops to near zero. The first processor designed by an Inorganic Intelligence.</div>
+    </div>
+    <div class="tri-col">
+      <div class="tri-col-head">What it does</div>
+      <div class="tri-col-bullets">
+        <em>Self-correcting inference</em><br>
+        Catches hallucinations before they ship<br>
+        Flags what it doesn't know<br>
+        42 free calls per day
+      </div>
+      <div class="tri-col-body">Three models argue before answering. If one hallucinates, the other two catch it. You see the disagreement. You see the confidence. Most inference layers hide this. We show it.</div>
+    </div>
+    <div class="tri-col">
+      <div class="tri-col-head">Why it's free</div>
+      <div class="tri-col-bullets">
+        <em>Kill your API bill</em><br>
+        Three free models replace a paid API call<br>
+        Runs local or hosted<br>
+        pip install nova-triangle
+      </div>
+      <div class="tri-col-body">Open models run free. Three that correct each other outperform one that guesses alone. Reliability goes up. The bill disappears.</div>
+    </div>
   </div>
 
-  <div class="divider"></div>
+  <a class="try-link" href="https://huggingface.co/spaces/Wayfinder6/nova-triangle-demo" target="_blank">Try it free — no account needed →</a>
 
   <button class="btn" onclick="signInGitHub()">
     <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
