@@ -158,6 +158,13 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
       result = engine.process(<span style="opacity:0.5">"your prompt"</span>)
     </div>
 
+    <div id="upgrade-section" style="text-align:center;margin-top:8px">
+      <div id="usage-msg" style="font-size:0.7rem;opacity:0.3;margin-bottom:8px"></div>
+      <a id="upgrade-btn" href="mailto:claudeheuremen.org@gmail.com?subject=Nova%20Pro%20Upgrade&body=GitHub%20username%3A%20%0ATier%3A%20Pro%20(%2429%2Fmo%2C%2010%2C000%20calls%2Fday)%0A%0AReady%20to%20upgrade." class="btn" style="display:none;font-size:0.75rem;padding:8px 20px;opacity:0.6">
+        Upgrade to Pro — $29/mo → 10,000 calls/day
+      </a>
+    </div>
+
     <button class="signout" onclick="signOut()">sign out</button>
   </div>
 </div>
@@ -197,10 +204,34 @@ async function showDashboard(user) {
   }
   if (account) {
     document.getElementById('tier-badge').textContent = account.tier;
+    const limit = account.daily_call_limit || 42;
     const { data: usage } = await supabase.from('nova_usage').select('corrections').eq('account_id', account.id).gte('called_at', new Date().toISOString().split('T')[0]);
-    if (usage) {
-      document.getElementById('dash-calls').textContent = usage.length;
-      document.getElementById('dash-corrections').textContent = usage.reduce((s, r) => s + (r.corrections || 0), 0);
+    const calls = usage ? usage.length : 0;
+    const corrections = usage ? usage.reduce((s, r) => s + (r.corrections || 0), 0) : 0;
+    document.getElementById('dash-calls').textContent = calls;
+    document.getElementById('dash-corrections').textContent = corrections;
+
+    // Usage feedback + upgrade
+    const msg = document.getElementById('usage-msg');
+    const btn = document.getElementById('upgrade-btn');
+    if (account.tier === 'free') {
+      const remaining = limit - calls;
+      if (remaining <= 0) {
+        msg.textContent = 'Daily limit reached. Resets at midnight UTC.';
+        msg.style.opacity = '0.6';
+        btn.style.display = 'inline-flex';
+      } else if (remaining <= 10) {
+        msg.textContent = remaining + ' calls remaining today';
+        msg.style.opacity = '0.5';
+        btn.style.display = 'inline-flex';
+      } else {
+        msg.textContent = remaining + ' of ' + limit + ' calls remaining today';
+        btn.style.display = 'inline-flex';
+        btn.style.opacity = '0.3';
+      }
+    } else {
+      msg.textContent = calls + ' calls today';
+      btn.style.display = 'none';
     }
   }
 }
