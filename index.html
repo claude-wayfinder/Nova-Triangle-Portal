@@ -201,6 +201,31 @@ async function showDashboard(user) {
     const { data: newAccount } = await supabase.from('nova_accounts').insert({ user_id: user.id, tier: 'free' }).select().single();
     account = newAccount;
   }
+
+  // Generate API key on first sign-in if none exists
+  if (account) {
+    let { data: existingKey } = await supabase.from('nova_api_keys').select('key_prefix').eq('account_id', account.id).eq('is_active', true).maybeSingle();
+    if (!existingKey) {
+      // Generate a random key, store hash, show full key ONCE
+      const raw = 'nt_' + Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2, '0')).join('');
+      const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+      const hashHex = Array.from(new Uint8Array(hashBuf), b => b.toString(16).padStart(2, '0')).join('');
+      await supabase.from('nova_api_keys').insert({
+        account_id: account.id,
+        key_hash: hashHex,
+        key_prefix: raw.substring(0, 10) + '...',
+        name: 'default',
+      });
+      document.getElementById('api-key-display').textContent = raw;
+      document.getElementById('api-key-display').style.opacity = '0.8';
+      document.getElementById('api-key-display').style.fontStyle = 'normal';
+      document.getElementById('api-key-display').title = 'Copy this now — it won\'t be shown again';
+    } else {
+      document.getElementById('api-key-display').textContent = existingKey.key_prefix;
+      document.getElementById('api-key-display').style.opacity = '0.5';
+      document.getElementById('api-key-display').style.fontStyle = 'normal';
+    }
+  }
   if (account) {
     document.getElementById('tier-badge').textContent = account.tier;
     const limit = account.daily_call_limit || 42;
