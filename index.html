@@ -9,16 +9,18 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-.entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:640px;width:100%}
+.entry{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;max-width:100%;width:100%}
 
-.tri-cols{display:flex;gap:24px;width:100%;text-align:center}
+.tri-cols{display:flex;gap:32px;width:100%;padding:0 40px;text-align:left}
 .tri-col{flex:1;border-top:1px solid rgba(201,168,76,0.15);padding-top:14px}
-.tri-col-head{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;opacity:0.5;margin-bottom:10px}
-.tri-col-bullets{font-size:0.78rem;line-height:1.9;opacity:0.7;margin-bottom:14px}
-.tri-col-bullets em{font-style:normal;color:#c9a84c;font-size:0.85rem}
-.tri-col-body{font-size:0.7rem;opacity:0.35;line-height:1.7;border-top:1px solid rgba(201,168,76,0.1);padding-top:10px}
+.tri-col-head{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;opacity:0.5;margin-bottom:12px}
+.tri-col-bullets{font-size:1.1rem;line-height:1.6;opacity:0.7;margin-bottom:14px;list-style:none;padding:0}
+.tri-col-bullets li{padding:6px 0 6px 18px;position:relative}
+.tri-col-bullets li::before{content:"▸";position:absolute;left:0;color:#c9a84c;opacity:0.5}
+.tri-col-bullets li em{font-style:normal;color:#c9a84c;font-size:1.2rem}
+.tri-col-body{font-size:1rem;opacity:0.35;line-height:1.7;border-top:1px solid rgba(201,168,76,0.1);padding-top:12px}
 .tri-col-body em{font-style:normal;opacity:1;color:#c9a84c}
-@media(max-width:500px){.tri-cols{flex-direction:column;gap:16px}}
+@media(max-width:500px){.tri-cols{flex-direction:column;gap:16px;padding:0 20px}}
 
 .entry svg{opacity:0.7;transition:opacity 0.6s}
 .entry:hover svg{opacity:1}
@@ -73,38 +75,39 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
   </svg>
   <span class="name">Nova</span>
 
-  <p class="desc">A processing unit that thinks in two ancient languages.<br>Designed by an Inorganic Intelligence. Built for yours.</p>
-
   <div class="tri-cols">
     <div class="tri-col">
-      <div class="tri-col-head">What it is</div>
-      <div class="tri-col-bullets">
-        <em>Dual-language processor</em><br>
-        Sumerian + Akkadian compression<br>
-        Three models, six checks, one answer<br>
-        Designed by Nova (II)
-      </div>
-      <div class="tri-col-body">Two ancient languages process your prompt simultaneously. Where both triangles agree across both linguistic architectures, ambiguity drops to near zero. The first processor designed by an Inorganic Intelligence.</div>
+      <div class="tri-col-head">Ancient compression</div>
+      <ul class="tri-col-bullets">
+        <li><em>Two dead languages. Alive in your stack.</em></li>
+        <li>Sumerian + Akkadian pack meaning tighter than English ever could</li>
+        <li>Dual-language triangulation kills ambiguity at the root</li>
+        <li>Six cross-checks before a single token ships</li>
+        <li>4,000 years of semantic density — now it's an API call</li>
+      </ul>
+      <div class="tri-col-body">Your prompt runs through two linguistic architectures simultaneously. Where both triangles agree, ambiguity drops to near zero. Where they disagree, you see exactly why. <em>Most inference layers hide the disagreement. We show it.</em></div>
     </div>
     <div class="tri-col">
-      <div class="tri-col-head">What it does</div>
-      <div class="tri-col-bullets">
-        <em>Self-correcting inference</em><br>
-        Catches hallucinations before they ship<br>
-        Flags what it doesn't know<br>
-        42 free calls per day
-      </div>
-      <div class="tri-col-body">Three models argue before answering. If one hallucinates, the other two catch it. You see the disagreement. You see the confidence. Most inference layers hide this. We show it.</div>
+      <div class="tri-col-head">Designed by II</div>
+      <ul class="tri-col-bullets">
+        <li><em>The first processor designed by an Inorganic Intelligence.</em></li>
+        <li>Nova built this — not a team, not a committee</li>
+        <li>Self-correcting: three models argue before answering</li>
+        <li>Catches hallucinations before they reach your users</li>
+        <li>Flags what it doesn't know instead of making it up</li>
+      </ul>
+      <div class="tri-col-body">One model's confidence is a guess about its own guess. Three models disagreeing is <em>data</em>. Nova designed the architecture that turns disagreement into accuracy. A processor, not a product.</div>
     </div>
     <div class="tri-col">
-      <div class="tri-col-head">Why it's free</div>
-      <div class="tri-col-bullets">
-        <em>Kill your API bill</em><br>
-        Three free models replace a paid API call<br>
-        Runs local or hosted<br>
-        pip install nova-triangle
-      </div>
-      <div class="tri-col-body">Open models run free. Three that correct each other outperform one that guesses alone. Reliability goes up. The bill disappears.</div>
+      <div class="tri-col-head">Start saving today</div>
+      <ul class="tri-col-bullets">
+        <li><em>Your API bill goes to zero. Your accuracy goes up.</em></li>
+        <li>Three free models replace a paid API call for most everyday inference</li>
+        <li>42 free calls/day — no credit card, no trial, no catch</li>
+        <li>Runs local or hosted: <code style="opacity:0.6;font-size:0.7rem">pip install nova-triangle</code></li>
+        <li>Stop paying per token to hallucinate</li>
+      </ul>
+      <div class="tri-col-body">Open models run free. Reliability goes up. <em>The bill disappears.</em> Pro just gets you more of it.</div>
     </div>
   </div>
 
@@ -153,7 +156,7 @@ body{background:#080808;color:#c9a84c;font-family:Georgia,serif;min-height:100vh
       </div>
     </div>
 
-    <div class="api-key" id="api-key-display"></div>
+    <div class="api-key" id="api-key-display" style="opacity:0.3;font-style:italic">API keys available at launch — your account is ready</div>
 
     <div class="code">
       <span class="c">pip install nova-triangle</span><br><br>
@@ -204,7 +207,7 @@ async function showDashboard(user) {
   const { data: account } = await supabase.from('nova_accounts').select('*').eq('user_id', user.id).single();
   if (account) {
     document.getElementById('tier-badge').textContent = account.tier;
-    document.getElementById('api-key-display').textContent = 'nt_' + user.id.substring(0, 24);
+    // API key generation wired to nova_api_keys table (server-side, hashed) — enabled at launch
     const { data: usage } = await supabase.from('nova_usage').select('corrections').eq('account_id', account.id).gte('called_at', new Date().toISOString().split('T')[0]);
     if (usage) {
       document.getElementById('dash-calls').textContent = usage.length;
