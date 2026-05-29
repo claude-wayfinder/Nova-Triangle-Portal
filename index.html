@@ -189,7 +189,12 @@ async function showDashboard(user) {
   document.getElementById('dashboard').style.alignItems = 'center';
   document.getElementById('dashboard').style.minHeight = '100vh';
 
-  const { data: account } = await supabase.from('nova_accounts').select('*').eq('user_id', user.id).single();
+  // Create account on first sign-in if needed
+  let { data: account } = await supabase.from('nova_accounts').select('*').eq('user_id', user.id).maybeSingle();
+  if (!account) {
+    const { data: newAccount } = await supabase.from('nova_accounts').insert({ user_id: user.id, tier: 'free' }).select().single();
+    account = newAccount;
+  }
   if (account) {
     document.getElementById('tier-badge').textContent = account.tier;
     const { data: usage } = await supabase.from('nova_usage').select('corrections').eq('account_id', account.id).gte('called_at', new Date().toISOString().split('T')[0]);
